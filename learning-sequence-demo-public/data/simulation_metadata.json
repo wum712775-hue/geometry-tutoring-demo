@@ -1,0 +1,92 @@
+{
+  "data_status": "fully synthetic; no real learner records",
+  "generator_sha256": "fc99ed6642394259d839b7628fbeef3c2d14c8859c047a1d79daab9b13e57f14",
+  "n_students": 50,
+  "n_events": 30,
+  "root_seed": 42,
+  "random_streams": {
+    "markov": {
+      "spawn_key": [
+        0
+      ]
+    },
+    "iid": {
+      "spawn_key": [
+        1
+      ]
+    }
+  },
+  "rng": "numpy.random.default_rng / PCG64",
+  "initial_probabilities": [
+    0.21823204419889494,
+    0.21823204419889528,
+    0.1312154696132597,
+    0.1837016574585635,
+    0.24861878453038658
+  ],
+  "initialization": "stationary distribution for both datasets",
+  "baseline_matching": "same expected marginal category probabilities; independent streams",
+  "behavior_order": [
+    "Gaze_A",
+    "Gaze_B",
+    "Error_Op",
+    "Look_Back",
+    "Correct_Op"
+  ],
+  "transition_matrix": [
+    [
+      0.2,
+      0.2,
+      0.2,
+      0.2,
+      0.2
+    ],
+    [
+      0.2,
+      0.2,
+      0.2,
+      0.2,
+      0.2
+    ],
+    [
+      0.1,
+      0.1,
+      0.1,
+      0.5,
+      0.2
+    ],
+    [
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.6
+    ],
+    [
+      0.4,
+      0.4,
+      0.05,
+      0.05,
+      0.1
+    ]
+  ],
+  "code_definitions": {
+    "Gaze_A": "hypothetical gaze event at region A",
+    "Gaze_B": "hypothetical gaze event at region B",
+    "Error_Op": "hypothetical incorrect operation event",
+    "Look_Back": "hypothetical return-look event, assigned by the simulator",
+    "Correct_Op": "hypothetical correct operation event"
+  },
+  "coding_assumption": "one mutually exclusive coded event per index",
+  "limitations": [
+    "Not raw gaze samples, fixation detection, or gaze duration data.",
+    "No timestamps, simultaneous channels, cognitive labels or learning outcomes.",
+    "One homogeneous, time-invariant Markov matrix; no learner differences.",
+    "IID and Markov marginal probabilities agree in expectation, not exactly in each sample."
+  ],
+  "versions": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "pandas": "2.2.3"
+  }
+}

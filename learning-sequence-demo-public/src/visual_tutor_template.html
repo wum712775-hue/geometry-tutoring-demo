@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>When should the teacher review a visual hint? | Meiying Wu</title>
+<style>
+:root {
+  color-scheme:light;
+  --ink:#152f2b; --muted:#4d625c; --line:#d4dfd8; --mint:#e9f3ee; --paper:#fffefa;
+  --accent:#005f50; --violet:#5e3ab8; --lavender:#f0ebfb; --bad:#842a20; --bad-bg:#fdf0eb;
+  font:16px/1.5 system-ui,sans-serif;
+}
+* {box-sizing:border-box}
+html {scroll-margin-top:1rem}
+body {margin:0;background:#f4f7f3;color:var(--ink)}
+main,.topbar {width:min(1200px,100% - 40px);margin:auto}
+.topbar {min-height:62px;display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line)}
+.brand {display:inline-flex;gap:9px;align-items:center;font-weight:750}
+.brand i {width:15px;height:15px;border-radius:3px 3px 2px 3px;background:var(--accent);transform:rotate(-12deg)}
+nav {display:flex;gap:20px}
+a {color:var(--accent);text-underline-offset:.18em}
+header.intro {padding:34px 0 25px;max-width:1100px}
+h1,h2,h3,p {margin:0}
+h1 {font-size:clamp(2.15rem,6vw,4.3rem);line-height:1.03;letter-spacing:-.056em;margin:0 0 12px}
+.intro p {color:var(--muted);font-size:1.1rem;max-width:690px}
+section {min-width:0}
+.workspace {display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:20px;align-items:start}
+.panel {background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:20px;min-width:0}
+.panel h2,.research > h2 {font-size:1.35rem;letter-spacing:-.02em;margin:0 0 10px}
+h3 {font-size:1.02rem;margin-bottom:8px}
+label {display:block;font-weight:650;margin-bottom:4px}
+select,input,button {border:1px solid #8da79c;border-radius:8px;background:white;color:var(--ink);font:inherit;padding:7px 10px;max-width:100%}
+select {
+  appearance:none;width:100%;height:44px;padding:0 36px 0 12px;line-height:normal;color:transparent;
+  background-color:white;
+  background-image:linear-gradient(45deg,transparent 50%,var(--accent) 50%),linear-gradient(135deg,var(--accent) 50%,transparent 50%);
+  background-position:calc(100% - 17px) 50%,calc(100% - 12px) 50%;
+  background-size:5px 5px;
+  background-repeat:no-repeat;
+}
+select option {color:var(--ink)}
+.select-shell {position:relative}
+.select-caption {
+  pointer-events:none;position:absolute;inset:1px 37px 1px 13px;display:block;
+  padding-top:9px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+button {cursor:pointer;min-height:38px}
+button:hover:not(:disabled) {border-color:var(--accent);background:var(--mint)}
+button:disabled {opacity:.5;cursor:default}
+button.primary {border-color:var(--accent);background:var(--accent);color:#fff}
+button.primary:hover:not(:disabled) {background:#004a40}
+button.segment[aria-pressed="true"] {background:var(--mint);border-color:var(--accent);font-weight:680}
+:focus-visible {outline:3px solid #6945b9;outline-offset:3px}
+p,li,td,th {overflow-wrap:anywhere}
+.saved {font-family:ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.small {color:var(--muted);font-size:.87rem}
+.row {display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row input {width:110px}
+.scenarios {margin-bottom:10px}
+.prompt {margin:16px 0 8px;font-size:1.13rem;font-weight:650}
+.figure {margin:10px 0 12px;background:#f3f7f4;border:1px solid #e2ebe5;border-radius:11px}
+canvas {display:block;width:min(100%,415px);height:auto;margin-inline:auto}
+.figure p {padding:0 12px 10px}
+.savedline {margin-bottom:12px}
+.live-block {border-top:1px solid var(--line);padding-top:12px;margin-bottom:14px}
+.live-block .row {margin:8px 0}
+.live-block .select-shell {min-width:164px}
+.notice {min-height:1.35em}
+.timeline {list-style:none;padding:0;margin:10px 0;display:grid;gap:5px}
+.timeline li {display:flex;gap:10px;padding:7px 8px;border-radius:5px;align-items:baseline}
+.timeline li.used {background:var(--mint);border-left:3px solid var(--accent)}
+.timeline li:last-child {border-bottom:1px solid var(--line)}
+.step-number {color:var(--muted);font-family:ui-monospace,monospace;min-width:1.15rem}
+.policies {display:grid;gap:8px;margin:9px 0 16px}
+.policy-details {margin:10px 0}
+.policy {border:1px solid var(--line);border-radius:8px;padding:9px 11px;background:#fbfcf9}
+.policy.active {border-color:#8bb9a9;background:var(--mint)}
+.policy p {font-size:.9rem;margin:2px 0}
+.policy-title {display:flex;align-items:baseline;justify-content:space-between;column-gap:8px;flex-wrap:wrap}
+.policy-title strong {font-size:.92rem}
+.action {color:#004c41;font-size:.9rem;font-weight:750}
+.review {padding-top:14px;border-top:1px solid var(--line)}
+.audit {margin:10px 0;padding:8px 11px;border-radius:8px;background:var(--mint);color:#134a39;font-size:.9rem}
+.audit.blocked {background:var(--bad-bg);color:var(--bad)}
+.audit p+p {margin-top:3px}
+.draft-figure {background:var(--lavender);border-color:#ddd3f0;margin:9px 0}
+.teacher-actions {margin-top:9px}
+.outcome {margin-top:12px;border-top:1px solid var(--line);padding-top:10px}
+.outcome p {margin:5px 0}
+.research {margin:26px 0;background:#fffefa;border:1px solid var(--line);border-radius:16px;padding:22px}
+.research details {border-top:1px solid var(--line);padding:12px 0 2px;margin-top:12px}
+summary {font-weight:680;cursor:pointer}
+.research details>p {margin:8px 0;max-width:780px}
+.table-wrap {overflow-x:auto}
+table {border-collapse:collapse;width:100%;text-align:left;margin:8px 0;font-variant-numeric:tabular-nums}
+td,th {border-bottom:1px solid var(--line);padding:7px 9px;vertical-align:top}
+th {font-weight:680}
+footer {color:var(--muted);padding:6px 0 34px;font-size:.87rem}
+[hidden] {display:none!important}
+@media(max-width:760px) {
+  main,.topbar {width:calc(100% - 24px)}
+  .workspace {grid-template-columns:1fr;gap:12px}
+  nav {gap:12px}
+  header.intro {padding:26px 0 20px}
+  .panel,.research {padding:15px}
+}
+@media(prefers-reduced-motion:no-preference) {
+  button {transition:background-color .12s,border-color .12s}
+}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="brand"><i aria-hidden="true"></i>Visual Tutor Lab</span>
+  <nav aria-label="Project"><a href="#evaluation">Evaluation</a><a href="#research-fit">Research fit</a></nav>
+</div>
+<main>
+<header class="intro">
+  <h1>When should the teacher step in?</h1>
+  <p>Two learners write the same wrong answer. See how their next steps change whether a geometry hint needs teacher review.</p>
+</header>
+
+<div class="workspace">
+<section class="panel" aria-labelledby="learner-heading">
+  <h2 id="learner-heading">Learner workspace</h2>
+  <div id="scenarios" class="row scenarios" aria-label="Compare learner traces"></div>
+  <p id="problem" class="prompt"></p>
+  <div class="figure"><canvas id="learner-figure" width="720" height="416" role="img"></canvas></div>
+  <p id="saved" class="savedline"></p>
+  <div id="live" class="live-block" hidden>
+    <label for="live-answer">Write an angle in degrees</label>
+    <div class="row">
+      <input type="number" id="live-answer" min="0.1" max="179.9" step="any" inputmode="decimal">
+      <button id="save-answer">Record answer</button>
+    </div>
+    <label for="live-pair">Which two angles do you think are equal?</label>
+    <div class="row"><div class="select-shell"><select id="live-pair"></select><span id="live-pair-display" class="select-caption" aria-hidden="true"></span></div><button id="save-pair">Mark angles</button></div>
+    <div class="row">
+      <button id="ask-for-help">Ask for help</button><button id="ask-for-picture">Request a visual hint</button><button id="clear-trace">Clear trace</button>
+    </div>
+    <p id="input-message" class="small notice" role="status"></p>
+  </div>
+  <h3>Observed steps</h3>
+  <p class="small">Green rows are evidence cited by the ordered policy.</p>
+  <ol id="timeline" class="timeline"></ol>
+  <div id="replay-controls" class="row">
+    <button id="previous">Back one step</button><button id="next">Next step</button><span id="step-count" class="small" aria-live="polite"></span>
+  </div>
+</section>
+
+<section class="panel" aria-labelledby="review-heading">
+  <h2 id="review-heading">Teacher review</h2>
+  <label for="workflow">Teacher review workflow</label>
+  <div class="select-shell"><select id="workflow">
+    <option value="all">Review every draft</option>
+    <option value="flagged" selected>Review flagged drafts only</option>
+  </select><span id="workflow-display" class="select-caption" aria-hidden="true"></span></div>
+  <div id="routing" class="audit" aria-live="polite"></div>
+  <button id="apply-workflow">Run selected workflow</button>
+  <details class="policy-details"><summary>Compare tutoring recommendations</summary>
+    <div id="policies" class="policies" aria-live="polite"></div>
+  </details>
+  <div class="review">
+    <label for="draft">Draft to inspect or edit</label>
+    <div class="select-shell"><select id="draft"></select><span id="draft-display" class="select-caption" aria-hidden="true"></span></div>
+    <div class="figure draft-figure">
+      <canvas id="draft-figure" width="720" height="416" role="img"></canvas>
+      <p id="draft-caption"></p>
+    </div>
+    <div id="audit" class="audit" role="status"></div>
+    <div class="row teacher-actions">
+      <button id="release" class="primary">Show hint to learner</button>
+      <button id="send-question">Ask a question</button>
+      <button id="withhold">Withhold hint</button>
+    </div>
+    <div id="outcome" class="outcome" aria-live="polite">
+      <h3>Learner preview</h3>
+      <div id="learner-message"></div>
+    </div>
+    <button id="export">Export decision log</button>
+  </div>
+</section>
+</div>
+
+<section id="evaluation" class="research" aria-labelledby="evaluation-heading">
+  <h2 id="evaluation-heading">Evaluation</h2>
+  <details open>
+    <summary>Compare review requests on authored cases</summary>
+    <p>Both workflows apply the same diagram checks. One routes every draft to a teacher. The other routes invalid, mistimed, or ambiguous drafts.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Workflow</th><th>Teacher review requests</th><th>Automatic hints</th><th>Automatic hints outside author rubric</th></tr></thead>
+      <tbody id="review-metrics"></tbody>
+    </table></div>
+    <p class="small">These are software routing counts on authored cases. They do not measure teacher time, teaching quality, or learning.</p>
+  </details>
+  <details>
+    <summary>Recorded highlight timing on public GeoDial data</summary>
+    <p id="geodial-scope"></p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Input to timing model</th><th>ROC AUC ↑</th><th>Average precision ↑</th><th>Brier score ↓</th></tr></thead>
+      <tbody id="geodial-metrics"></tbody>
+    </table></div>
+    <p id="geodial-effect"></p>
+    <p class="small">The target is the recorded teacher’s decision to draw. The benchmark does not rate the chosen objects or measure student learning.</p>
+  </details>
+  <details>
+    <summary>Rule behavior on authored challenge cases</summary>
+    <p>The reference actions and the rules were developed together. Some cases allow more than one action. Final decisions are scored against the authored reference.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Policy</th><th>Agreement</th><th>Unwanted highlight*</th><th>Missed required highlight*</th></tr></thead>
+      <tbody id="challenge-metrics"></tbody>
+    </table></div>
+    <p class="small">*Relative to the authored reference.</p>
+    <label for="challenge-case">Inspect a challenge case</label>
+    <div class="select-shell"><select id="challenge-case"><option value="">Choose a case to load</option></select><span id="challenge-case-display" class="select-caption" aria-hidden="true"></span></div>
+    <p id="challenge-reference" class="small"></p>
+  </details>
+</section>
+<section id="research-fit" class="research" aria-labelledby="fit-heading">
+  <h2 id="fit-heading">Research fit</h2>
+  <p>April Yi Wang’s 2026 teacher-control study examined where educators could intervene in math visual authoring. This prototype asks when to request that control during a live tutoring turn. The 2026 GeoDial findings motivate checking which diagram objects a hint highlights.</p>
+  <p style="margin-top:8px"><a href="https://arxiv.org/abs/2606.12419">GeoDial preprint</a> · <a href="https://peachlab.inf.ethz.ch/projects/multimodal-tutor/">PEACH–LRE project</a> · <a href="https://arxiv.org/abs/2605.10672">Teacher control study</a> · <a href="https://doi.org/10.1145/3830398.3830500">SketchMind (UIST 2026)</a></p>
+</section>
+<footer>Meiying Wu · PhD application research prototype · 20 November 2026</footer>
+</main>
+<script type="application/json" id="project-data">__PROJECT_DATA__</script>
+<script>
+__CORE_SCRIPT__
+</script>
+<script>
+__APP_SCRIPT__
+</script>
+</body>
+</html>

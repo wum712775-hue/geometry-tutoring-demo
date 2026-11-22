@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>When should the tutor intervene? | Live lab</title>
+<style>
+*{box-sizing:border-box} body{margin:0;background:#f4f7f6;color:#172c31;font:16px/1.5 system-ui,sans-serif}
+main{max-width:1120px;margin:auto;padding:28px 20px 54px} h1{font-size:clamp(2rem,5vw,3.4rem);line-height:1.08;letter-spacing:-.04em;margin:12px 0} h2{font-size:1.2rem} p{max-width:75ch}
+a{color:#075d52} section{background:#fff;border:1px solid #ccd9d5;border-radius:14px;padding:18px;margin-top:18px}
+.layout{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:14px}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0} button,select{font:inherit;border:1px solid #78978e;border-radius:7px;padding:7px 11px;background:white;color:inherit;max-width:100%} button{cursor:pointer}
+.primary{background:#116157;color:white} :focus-visible{outline:3px solid #068678;outline-offset:2px}
+pre{background:#eef5f2;padding:12px;overflow:auto;border-radius:8px} .card{border-radius:8px;background:#edf5f1;padding:10px 12px;margin:8px 0} .card p{margin:.25rem 0}
+table{width:100%;border-collapse:collapse;text-align:left} th,td{border-bottom:1px solid #d5e1dd;padding:7px} .scroll{overflow:auto} small{color:#385751}
+</style>
+</head>
+<body><main>
+<header><a href="SCRIPTED_REPLAY.html">Scripted case replay</a>
+<h1>When should the tutor intervene?</h1>
+<p>Revise a small program, run checks, and compare what three policies infer from the same evidence.</p>
+</header>
+<div class="layout">
+<section>
+<h2>Count adjacent repeats</h2>
+<p>Return how often a list item is equal to its immediate predecessor. For <code>[2, 2, 2]</code>, the correct result is <strong>2</strong>.</p>
+<label for="implementation">Choose a loop rule</label>
+<select id="implementation">
+<option value="all">Compare with the first item</option>
+<option value="skip">Compare with predecessor, skip index 1</option>
+<option value="correct">Compare with predecessor from index 1</option>
+</select>
+<div class="actions"><button id="apply">Apply revision</button><button id="check" class="primary">Run current check</button><button id="additional">Run second current check</button><button id="obsolete">Run obsolete check</button></div>
+<pre id="code"></pre>
+<p id="result" aria-live="polite"></p>
+<small>The displayed program runs on small fixed inputs. The obsolete check expects one repeat per run and deliberately conflicts with the current task.</small>
+</section>
+<section>
+<h2>Tutoring decisions</h2>
+<div id="decisions" aria-live="polite"></div>
+<details><summary>Compare two phrasings for the same prompt decision</summary>
+<p><strong>Guiding question.</strong> For the second and third elements, which earlier index should each be compared against?</p>
+<p><strong>Answer disclosure.</strong> Use a loop starting at index 1 and compare each item with the item at index i − 1.</p>
+<p>Both messages offer help at the same moment. The second reveals the implementation. This pair is an authored example for separate evaluation of timing and wording.</p>
+</details>
+</section>
+</div>
+<section>
+<h2>Evidence log</h2>
+<div class="actions"><button id="example">Replay stale-fixture example</button><button id="reset">Reset</button><button id="download">Export log as JSON</button></div>
+<div class="scroll"><table><thead><tr><th>Event</th><th>Code version</th><th>Fixture</th><th>Actual / expected</th><th>Policies</th></tr></thead><tbody id="events"></tbody></table></div>
+<small>Local demonstration. Policy outputs are deterministic, and the export includes each decision and explanation. No data is sent.</small>
+</section>
+</main>
+<script>
+const byId = id => document.getElementById(id);
+const make = (tag, value) => {
+  const el = document.createElement(tag);
+  el.textContent = value;
+  return el;
+};
+const variants = {
+  all: {start:1, reference:() => 0, code:"0"},
+  skip: {start:2, reference:i => i-1, code:"i - 1"},
+  correct: {start:1, reference:i => i-1, code:"i - 1"}
+};
+const fixtures = {
+  current: {id:"adjacent-pairs-v2", valid:true, input:[2,2,2,3,3], expected:3},
+  additional: {id:"offset-pairs-v2", valid:true, input:[8,5,5,5], expected:2},
+  obsolete: {id:"runs-v1", valid:false, input:[2,2,2,3,3], expected:2}
+};
+const policyNames = ["Latest event", "Ordered history", "History + evidence validity"];
+let active, version, events;
+function actions() {
+  const last = events.at(-1);
+  const currentTests = events.filter(event => event.version === version && event.fixture);
+  const failures = currentTests.filter(event => event.type === "fail").length;
+  const validFailures = new Set(currentTests.filter(event => event.type === "fail" && event.fixture.valid)
+    .map(event => event.fixture.id)).size;
+  const decision = (action, reason) => ({action,reason});
+  if (!last || last.type === "revise") {
+    return policyNames.map(() => decision("Run check", "Gather evidence for this program version."));
+  }
+  const wait = decision("Wait", "Give the learner time to work with the latest evidence.");
+  const probe = decision("Ask a question", "Repeated failures suggest checking which predecessor the loop compares.");
+  return [
+    wait,
+    last.type === "fail" && failures >= 2 ? probe : wait,
+    !last.fixture.valid ? decision("Rerun current check", "This fixture evaluates the old specification.") :
+      last.type === "fail" && validFailures >= 2
+        ? decision(probe.action, "Two distinct current checks failed on this version.") : wait
+  ];
+}
+function add(event) {
+  const record = {...event, version};
+  events.push(record);
+  record.decisions = actions().map((decision, i) => ({policy:policyNames[i], ...decision}));
+  render();
+}
+function revise(choice) {
+  if (choice === active) return;
+  active = choice;
+  version++;
+  add({type:"revise", implementation:active});
+}
+function run(fixture) {
+  const variant = variants[active];
+  let actual = 0;
+  for (let i = variant.start; i < fixture.input.length; i++) {
+    if (fixture.input[i] === fixture.input[variant.reference(i)]) actual++;
+  }
+  add({type:actual === fixture.expected ? "pass" : "fail", fixture, actual, implementation:active});
+}
+function reset() {
+  active = "all";
+  version = 1;
+  events = [];
+  byId("implementation").value = active;
+  render();
+}
+function render() {
+  const variant = variants[active];
+  byId("code").textContent = [
+    "let count = 0;",
+    "for (let i = " + variant.start + "; i < values.length; i++) {",
+    "  if (values[i] === values[" + variant.code + "]) count++;",
+    "}",
+    "return count;"
+  ].join("\n");
+  const last = events.at(-1);
+  byId("result").textContent = last?.fixture
+    ? "Version " + version + " · " + last.fixture.id + " · result " + last.actual + ", expected " + last.fixture.expected
+    : "Version " + version + " ready to test.";
+  byId("decisions").replaceChildren(...actions().map(({action,reason},i) => {
+    const panel = make("div","");
+    panel.className = "card";
+    panel.append(make("strong",policyNames[i]),make("p",action),make("small",reason));
+    return panel;
+  }));
+  byId("events").replaceChildren(...events.map(record => {
+    const row = make("tr","");
+    const fixture = record.fixture;
+    const fields = [record.type, "v" + record.version, fixture ? fixture.id : "—",
+      fixture ? record.actual + " / " + fixture.expected : "—",
+      record.decisions.map(d => d.action).join(" · ")];
+    row.append(...fields.map(value => make("td",value)));
+    return row;
+  }));
+}
+byId("apply").onclick = () => revise(byId("implementation").value);
+byId("check").onclick = () => run(fixtures.current);
+byId("additional").onclick = () => run(fixtures.additional);
+byId("obsolete").onclick = () => run(fixtures.obsolete);
+byId("reset").onclick = reset;
+byId("example").onclick = () => {
+  reset();
+  run(fixtures.current);
+  byId("implementation").value = "correct";
+  revise("correct");
+  run(fixtures.obsolete);
+  run(fixtures.obsolete);
+};
+byId("download").onclick = () => {
+  const url = URL.createObjectURL(new Blob([JSON.stringify({task:"adjacent-repeats",events},null,2)],{type:"application/json"}));
+  const link = make("a","");
+  link.href = url;
+  link.download = "intervention-trace.json";
+  link.click();
+  setTimeout(() => URL.revokeObjectURL(url),1000);
+};
+reset();
+</script>
+</body></html>

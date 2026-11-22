@@ -1,0 +1,6 @@
+from_behavior,Gaze_A,Gaze_B,Error_Op,Look_Back,Correct_Op
+Gaze_A,0.2,0.2,0.2,0.2,0.2
+Gaze_B,0.2,0.2,0.2,0.2,0.2
+Error_Op,0.1,0.1,0.1,0.5,0.2
+Look_Back,0.1,0.1,0.1,0.1,0.6
+Correct_Op,0.4,0.4,0.05,0.05,0.1

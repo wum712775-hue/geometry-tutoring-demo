@@ -1,0 +1,31 @@
+{
+  "dataset": "iid",
+  "n_students": 50,
+  "n_records": 1500,
+  "n_transitions": 1450,
+  "permutation_seed": 43,
+  "n_permutations": 4999,
+  "overall_statistic": 19.732852113115683,
+  "overall_permutation_p": 0.213,
+  "minimum_monte_carlo_p": 0.0002,
+  "bootstrap_seed": 44,
+  "n_bootstrap": 1999,
+  "bootstrap_status": "computed; pointwise percentile intervals",
+  "interval_scope": "pointwise 95% learner-bootstrap percentile intervals; not simultaneous",
+  "source_dataset_sha256": "54bb879561f447aa8bf9ae56f4c993ce132b6113afccdde6a05cedae7417d15e",
+  "analysis_source_sha256": "1a2dc4936eaae9d10560a2f80aa81472faf94d465d8cd6ebe0a14e4bee405581",
+  "simulation_metadata_sha256": "b786f45f13116726d12fb93531e573b20fbdf3450bd6dfe96bac590f624653ca",
+  "null_hypothesis": "exchangeable event order within each learner conditional on category counts",
+  "interpretation": "global order-dependence test; cell localization is exploratory",
+  "limitations": [
+    "Event-order exchangeability under the null is required.",
+    "Real learning trends, task phases and multiple sessions require a redesigned null model.",
+    "BH/BY do not establish cell-specific FDR control under partial temporal alternatives.",
+    "Both excess and deficit transitions are tested; inspect the signed difference."
+  ],
+  "versions": {
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "scipy": "1.17.0"
+  }
+}

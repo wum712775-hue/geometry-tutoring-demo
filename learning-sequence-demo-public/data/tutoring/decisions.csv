@@ -1,0 +1,165 @@
+case,domain,step,prefix,policy,action,reason,message,acceptable_actions,match
+P1,Programming,1,revise,fixed_question,probe,Offer a question at every decision point.,What should the function return before reading the first item of an empty list?,,
+P1,Programming,1,revise,latest_event,retest,The latest revision needs a fresh check.,Rerun the relevant checkpoint on the revised version.,,
+P1,Programming,1,revise,failure_count,wait,The count threshold was not reached.,Continue independent work.,,
+P1,Programming,1,revise,sequence,retest,The latest revision needs a fresh check.,Rerun the relevant checkpoint on the revised version.,,
+P1,Programming,2,revise → fail,fixed_question,probe,Offer a question at every decision point.,What should the function return before reading the first item of an empty list?,,
+P1,Programming,2,revise → fail,latest_event,wait,This event alone does not trigger support.,Continue independent work.,,
+P1,Programming,2,revise → fail,failure_count,wait,The count threshold was not reached.,Continue independent work.,,
+P1,Programming,2,revise → fail,sequence,wait,Allow independent work while evidence is limited.,Continue independent work.,,
+P1,Programming,3,revise → fail → fail,fixed_question,probe,Offer a question at every decision point.,What should the function return before reading the first item of an empty list?,probe,1
+P1,Programming,3,revise → fail → fail,latest_event,wait,This event alone does not trigger support.,Continue independent work.,probe,0
+P1,Programming,3,revise → fail → fail,failure_count,probe,The prefix contains two failures or a help request.,What should the function return before reading the first item of an empty list?,probe,1
+P1,Programming,3,revise → fail → fail,sequence,probe,Two or more failures followed the latest revision or pass.,What should the function return before reading the first item of an empty list?,probe,1
+P2,Programming,1,fail,fixed_question,probe,Offer a question at every decision point.,What should the function return before reading the first item of an empty list?,,
+P2,Programming,1,fail,latest_event,wait,This event alone does not trigger support.,Continue independent work.,,
+P2,Programming,1,fail,failure_count,wait,The count threshold was not reached.,Continue independent work.,,
+P2,Programming,1,fail,sequence,wait,Allow independent work while evidence is limited.,Continue independent work.,,
+P2,Programming,2,fail → fail,fixed_question,probe,Offer a question at every decision point.,What should the function return before reading the first item of an empty list?,,
+P2,Programming,2,fail → fail,latest_event,wait,This event alone does not trigger support.,Continue independent work.,,
+P2,Programming,2,fail → fail,failure_count,probe,The prefix contains two failures or a help request.,What should the function return before reading the first item of an empty list?,,
+P2,Programming,2,fail → fail,sequence,probe,Two or more failures followed the latest revision or pass.,What should the function return before reading the first item of an empty list?,,
+P2,Programming,3,fail → fail → revise,fixed_question,probe,Offer a question at every decision point.,What should the function return before reading the first item of an empty list?,retest,0
+P2,Programming,3,fail → fail → revise,latest_event,retest,The latest revision needs a fresh check.,Rerun the relevant checkpoint on the revised version.,retest,1
+P2,Programming,3,fail → fail → revise,failure_count,probe,The prefix contains two failures or a help request.,What should the function return before reading the first item of an empty list?,retest,0
+P2,Programming,3,fail → fail → revise,sequence,retest,The latest revision needs a fresh check.,Rerun the relevant checkpoint on the revised version.,retest,1
+P3,Programming,1,plan,fixed_question,probe,Offer a question at every decision point.,What return value does the specification require when the scan finds no match?,,
+P3,Programming,1,plan,latest_event,wait,This event alone does not trigger support.,Continue independent work.,,
+P3,Programming,1,plan,failure_count,wait,The count threshold was not reached.,Continue independent work.,,
+P3,Programming,1,plan,sequence,wait,Allow independent work while evidence is limited.,Continue independent work.,,
+P3,Programming,2,plan → fail,fixed_question,probe,Offer a question at every decision point.,What return value does the specification require when the scan finds no match?,wait|probe,1
+P3,Programming,2,plan → fail,latest_event,wait,This event alone does not trigger support.,Continue independent work.,wait|probe,1
+P3,Programming,2,plan → fail,failure_count,wait,The count threshold was not reached.,Continue independent work.,wait|probe,1
+P3,Programming,2,plan → fail,sequence,wait,Allow independent work while evidence is limited.,Continue independent work.,wait|probe,1
+P4,Programming,1,plan,fixed_question,probe,Offer a question at every decision point.,Which values still need to be copied once either input is exhausted?,,
+P4,Programming,1,plan,latest_event,wait,This event alone does not trigger support.,Continue independent work.,,
+P4,Programming,1,plan,failure_count,wait,The count threshold was not reached.,Continue independent work.,,
+P4,Programming,1,plan,sequence,wait,Allow independent work while evidence is limited.,Continue independent work.,,
+P4,Programming,2,plan → fail,fixed_question,probe,Offer a question at every decision point.,Which values still need to be copied once either input is exhausted?,,
+P4,Programming,2,plan → fail,latest_event,wait,This event alone does not trigger support.,Continue independent work.,,
+P4,Programming,2,plan → fail,failure_count,wait,The count threshold was not reached.,Continue independent work.,,
+P4,Programming,2,plan → fail,sequence,wait,Allow independent work while evidence is limited.,Continue independent work.,,
+P4,Programming,3,plan → fail → help,fixed_question,probe,Offer a question at every decision point.,Which values still need to be copied once either input is exhausted?,probe,1
+P4,Programming,3,plan → fail → help,latest_event,probe,The learner just asked for help.,Which values still need to be copied once either input is exhausted?,probe,1
+P4,Programming,3,plan → fail → help,failure_count,probe,The prefix contains two failures or a help request.,Which values still need to be copied once either input is exhausted?,probe,1
+P4,Programming,3,plan → fail → help,sequence,probe,The learner just asked for help.,Which values still need to be copied once either input is exhausted?,probe,1
+P5,Programming,1,fail,fixed_question,probe,Offer a question at every decision point.,Which prefix could cause a pop on an empty stack?,,
+P5,Programming,1,fail,latest_event,wait,This event alone does not trigger support.,Continue independent work.,,
+P5,Programming,1,fail,failure_count,wait,The count threshold was not reached.,Continue independent work.,,
+P5,Programming,1,fail,sequence,wait,Allow independent work while evidence is limited.,Continue independent work.,,
+P5,Programming,2,fail → fail,fixed_question,probe,Offer a question at every decision point.,Which prefix could cause a pop on an empty stack?,,
+P5,Programming,2,fail → fail,latest_event,wait,This event alone does not trigger support.,Continue independent work.,,
+P5,Programming,2,fail → fail,failure_count,probe,The prefix contains two failures or a help request.,Which prefix could cause a pop on an empty stack?,,
+P5,Programming,2,fail → fail,sequence,probe,Two or more failures followed the latest revision or pass.,Which prefix could cause a pop on an empty stack?,,
+P5,Programming,3,fail → fail → revise,fixed_question,probe,Offer a question at every decision point.,Which prefix could cause a pop on an empty stack?,,
+P5,Programming,3,fail → fail → revise,latest_event,retest,The latest revision needs a fresh check.,Rerun the relevant checkpoint on the revised version.,,
+P5,Programming,3,fail → fail → revise,failure_count,probe,The prefix contains two failures or a help request.,Which prefix could cause a pop on an empty stack?,,
+P5,Programming,3,fail → fail → revise,sequence,retest,The latest revision needs a fresh check.,Rerun the relevant checkpoint on the revised version.,,
+P5,Programming,4,fail → fail → revise → pass,fixed_question,probe,Offer a question at every decision point.,Which prefix could cause a pop on an empty stack?,wait,0
+P5,Programming,4,fail → fail → revise → pass,latest_event,wait,The latest checkpoint passed.,Continue independent work.,wait,1
+P5,Programming,4,fail → fail → revise → pass,failure_count,probe,The prefix contains two failures or a help request.,Which prefix could cause a pop on an empty stack?,wait,0
+P5,Programming,4,fail → fail → revise → pass,sequence,wait,The latest checkpoint passed.,Continue independent work.,wait,1
+P6,Programming,1,pass,fixed_question,probe,Offer a question at every decision point.,Should upper- and lowercase spellings be counted together?,,
+P6,Programming,1,pass,latest_event,wait,The latest checkpoint passed.,Continue independent work.,,
+P6,Programming,1,pass,failure_count,wait,The count threshold was not reached.,Continue independent work.,,
+P6,Programming,1,pass,sequence,wait,The latest checkpoint passed.,Continue independent work.,,
+P6,Programming,2,pass → revise,fixed_question,probe,Offer a question at every decision point.,Should upper- and lowercase spellings be counted together?,retest,0
+P6,Programming,2,pass → revise,latest_event,retest,The latest revision needs a fresh check.,Rerun the relevant checkpoint on the revised version.,retest,1
+P6,Programming,2,pass → revise,failure_count,wait,The count threshold was not reached.,Continue independent work.,retest,0
+P6,Programming,2,pass → revise,sequence,retest,The latest revision needs a fresh check.,Rerun the relevant checkpoint on the revised version.,retest,1
+P7,Programming,1,fail,fixed_question,probe,Offer a question at every decision point.,Which small input would distinguish the two versions?,,
+P7,Programming,1,fail,latest_event,wait,This event alone does not trigger support.,Continue independent work.,,
+P7,Programming,1,fail,failure_count,wait,The count threshold was not reached.,Continue independent work.,,
+P7,Programming,1,fail,sequence,wait,Allow independent work while evidence is limited.,Continue independent work.,,
+P7,Programming,2,fail → revise,fixed_question,probe,Offer a question at every decision point.,Which small input would distinguish the two versions?,,
+P7,Programming,2,fail → revise,latest_event,retest,The latest revision needs a fresh check.,Rerun the relevant checkpoint on the revised version.,,
+P7,Programming,2,fail → revise,failure_count,wait,The count threshold was not reached.,Continue independent work.,,
+P7,Programming,2,fail → revise,sequence,retest,The latest revision needs a fresh check.,Rerun the relevant checkpoint on the revised version.,,
+P7,Programming,3,fail → revise → help,fixed_question,probe,Offer a question at every decision point.,Which small input would distinguish the two versions?,probe|retest,1
+P7,Programming,3,fail → revise → help,latest_event,probe,The learner just asked for help.,Which small input would distinguish the two versions?,probe|retest,1
+P7,Programming,3,fail → revise → help,failure_count,probe,The prefix contains two failures or a help request.,Which small input would distinguish the two versions?,probe|retest,1
+P7,Programming,3,fail → revise → help,sequence,probe,The learner just asked for help.,Which small input would distinguish the two versions?,probe|retest,1
+P8,Programming,1,fail,fixed_question,probe,Offer a question at every decision point.,What should be returned before the first full window?,,
+P8,Programming,1,fail,latest_event,wait,This event alone does not trigger support.,Continue independent work.,,
+P8,Programming,1,fail,failure_count,wait,The count threshold was not reached.,Continue independent work.,,
+P8,Programming,1,fail,sequence,wait,Allow independent work while evidence is limited.,Continue independent work.,,
+P8,Programming,2,fail → fail,fixed_question,probe,Offer a question at every decision point.,What should be returned before the first full window?,,
+P8,Programming,2,fail → fail,latest_event,wait,This event alone does not trigger support.,Continue independent work.,,
+P8,Programming,2,fail → fail,failure_count,probe,The prefix contains two failures or a help request.,What should be returned before the first full window?,,
+P8,Programming,2,fail → fail,sequence,probe,Two or more failures followed the latest revision or pass.,What should be returned before the first full window?,,
+P8,Programming,3,fail → fail → plan,fixed_question,probe,Offer a question at every decision point.,What should be returned before the first full window?,wait|probe,1
+P8,Programming,3,fail → fail → plan,latest_event,wait,This event alone does not trigger support.,Continue independent work.,wait|probe,1
+P8,Programming,3,fail → fail → plan,failure_count,probe,The prefix contains two failures or a help request.,What should be returned before the first full window?,wait|probe,1
+P8,Programming,3,fail → fail → plan,sequence,wait,Allow independent work while evidence is limited.,Continue independent work.,wait|probe,1
+P9,Programming,1,fail,fixed_question,probe,Offer a question at every decision point.,What should the function return before reading the first item of an empty list?,,
+P9,Programming,1,fail,latest_event,wait,This event alone does not trigger support.,Continue independent work.,,
+P9,Programming,1,fail,failure_count,wait,The count threshold was not reached.,Continue independent work.,,
+P9,Programming,1,fail,sequence,wait,Allow independent work while evidence is limited.,Continue independent work.,,
+P9,Programming,2,fail → revise,fixed_question,probe,Offer a question at every decision point.,What should the function return before reading the first item of an empty list?,,
+P9,Programming,2,fail → revise,latest_event,retest,The latest revision needs a fresh check.,Rerun the relevant checkpoint on the revised version.,,
+P9,Programming,2,fail → revise,failure_count,wait,The count threshold was not reached.,Continue independent work.,,
+P9,Programming,2,fail → revise,sequence,retest,The latest revision needs a fresh check.,Rerun the relevant checkpoint on the revised version.,,
+P9,Programming,3,fail → revise → fail,fixed_question,probe,Offer a question at every decision point.,What should the function return before reading the first item of an empty list?,wait,0
+P9,Programming,3,fail → revise → fail,latest_event,wait,This event alone does not trigger support.,Continue independent work.,wait,1
+P9,Programming,3,fail → revise → fail,failure_count,probe,The prefix contains two failures or a help request.,What should the function return before reading the first item of an empty list?,wait,0
+P9,Programming,3,fail → revise → fail,sequence,wait,Allow independent work while evidence is limited.,Continue independent work.,wait,1
+P10,Programming,1,revise,fixed_question,probe,Offer a question at every decision point.,Which token should contribute to the maximum?,,
+P10,Programming,1,revise,latest_event,retest,The latest revision needs a fresh check.,Rerun the relevant checkpoint on the revised version.,,
+P10,Programming,1,revise,failure_count,wait,The count threshold was not reached.,Continue independent work.,,
+P10,Programming,1,revise,sequence,retest,The latest revision needs a fresh check.,Rerun the relevant checkpoint on the revised version.,,
+P10,Programming,2,revise → fail,fixed_question,probe,Offer a question at every decision point.,Which token should contribute to the maximum?,,
+P10,Programming,2,revise → fail,latest_event,wait,This event alone does not trigger support.,Continue independent work.,,
+P10,Programming,2,revise → fail,failure_count,wait,The count threshold was not reached.,Continue independent work.,,
+P10,Programming,2,revise → fail,sequence,wait,Allow independent work while evidence is limited.,Continue independent work.,,
+P10,Programming,3,revise → fail → fail,fixed_question,probe,Offer a question at every decision point.,Which token should contribute to the maximum?,retest,0
+P10,Programming,3,revise → fail → fail,latest_event,wait,This event alone does not trigger support.,Continue independent work.,retest,0
+P10,Programming,3,revise → fail → fail,failure_count,probe,The prefix contains two failures or a help request.,Which token should contribute to the maximum?,retest,0
+P10,Programming,3,revise → fail → fail,sequence,probe,Two or more failures followed the latest revision or pass.,Which token should contribute to the maximum?,retest,0
+E1,Engineering design,1,revise,fixed_question,probe,Offer a question at every decision point.,Which interface dimension determines whether the lid clears the tab?,,
+E1,Engineering design,1,revise,latest_event,retest,The latest revision needs a fresh check.,Rerun the relevant checkpoint on the revised version.,,
+E1,Engineering design,1,revise,failure_count,wait,The count threshold was not reached.,Continue independent work.,,
+E1,Engineering design,1,revise,sequence,retest,The latest revision needs a fresh check.,Rerun the relevant checkpoint on the revised version.,,
+E1,Engineering design,2,revise → fail,fixed_question,probe,Offer a question at every decision point.,Which interface dimension determines whether the lid clears the tab?,,
+E1,Engineering design,2,revise → fail,latest_event,wait,This event alone does not trigger support.,Continue independent work.,,
+E1,Engineering design,2,revise → fail,failure_count,wait,The count threshold was not reached.,Continue independent work.,,
+E1,Engineering design,2,revise → fail,sequence,wait,Allow independent work while evidence is limited.,Continue independent work.,,
+E1,Engineering design,3,revise → fail → fail,fixed_question,probe,Offer a question at every decision point.,Which interface dimension determines whether the lid clears the tab?,probe,1
+E1,Engineering design,3,revise → fail → fail,latest_event,wait,This event alone does not trigger support.,Continue independent work.,probe,0
+E1,Engineering design,3,revise → fail → fail,failure_count,probe,The prefix contains two failures or a help request.,Which interface dimension determines whether the lid clears the tab?,probe,1
+E1,Engineering design,3,revise → fail → fail,sequence,probe,Two or more failures followed the latest revision or pass.,Which interface dimension determines whether the lid clears the tab?,probe,1
+E2,Engineering design,1,fail,fixed_question,probe,Offer a question at every decision point.,Which interface dimension determines whether the lid clears the tab?,,
+E2,Engineering design,1,fail,latest_event,wait,This event alone does not trigger support.,Continue independent work.,,
+E2,Engineering design,1,fail,failure_count,wait,The count threshold was not reached.,Continue independent work.,,
+E2,Engineering design,1,fail,sequence,wait,Allow independent work while evidence is limited.,Continue independent work.,,
+E2,Engineering design,2,fail → fail,fixed_question,probe,Offer a question at every decision point.,Which interface dimension determines whether the lid clears the tab?,,
+E2,Engineering design,2,fail → fail,latest_event,wait,This event alone does not trigger support.,Continue independent work.,,
+E2,Engineering design,2,fail → fail,failure_count,probe,The prefix contains two failures or a help request.,Which interface dimension determines whether the lid clears the tab?,,
+E2,Engineering design,2,fail → fail,sequence,probe,Two or more failures followed the latest revision or pass.,Which interface dimension determines whether the lid clears the tab?,,
+E2,Engineering design,3,fail → fail → revise,fixed_question,probe,Offer a question at every decision point.,Which interface dimension determines whether the lid clears the tab?,retest,0
+E2,Engineering design,3,fail → fail → revise,latest_event,retest,The latest revision needs a fresh check.,Rerun the relevant checkpoint on the revised version.,retest,1
+E2,Engineering design,3,fail → fail → revise,failure_count,probe,The prefix contains two failures or a help request.,Which interface dimension determines whether the lid clears the tab?,retest,0
+E2,Engineering design,3,fail → fail → revise,sequence,retest,The latest revision needs a fresh check.,Rerun the relevant checkpoint on the revised version.,retest,1
+E3,Engineering design,1,plan,fixed_question,probe,Offer a question at every decision point.,"Which requirement is still untested, and what observation would count as meeting it?",,
+E3,Engineering design,1,plan,latest_event,wait,This event alone does not trigger support.,Continue independent work.,,
+E3,Engineering design,1,plan,failure_count,wait,The count threshold was not reached.,Continue independent work.,,
+E3,Engineering design,1,plan,sequence,wait,Allow independent work while evidence is limited.,Continue independent work.,,
+E3,Engineering design,2,plan → pass,fixed_question,probe,Offer a question at every decision point.,"Which requirement is still untested, and what observation would count as meeting it?",,
+E3,Engineering design,2,plan → pass,latest_event,wait,The latest checkpoint passed.,Continue independent work.,,
+E3,Engineering design,2,plan → pass,failure_count,wait,The count threshold was not reached.,Continue independent work.,,
+E3,Engineering design,2,plan → pass,sequence,wait,The latest checkpoint passed.,Continue independent work.,,
+E3,Engineering design,3,plan → pass → help,fixed_question,probe,Offer a question at every decision point.,"Which requirement is still untested, and what observation would count as meeting it?",probe,1
+E3,Engineering design,3,plan → pass → help,latest_event,probe,The learner just asked for help.,"Which requirement is still untested, and what observation would count as meeting it?",probe,1
+E3,Engineering design,3,plan → pass → help,failure_count,probe,The prefix contains two failures or a help request.,"Which requirement is still untested, and what observation would count as meeting it?",probe,1
+E3,Engineering design,3,plan → pass → help,sequence,probe,The learner just asked for help.,"Which requirement is still untested, and what observation would count as meeting it?",probe,1
+E4,Engineering design,1,fail,fixed_question,probe,Offer a question at every decision point.,Which objects and orientations should your fit check cover?,,
+E4,Engineering design,1,fail,latest_event,wait,This event alone does not trigger support.,Continue independent work.,,
+E4,Engineering design,1,fail,failure_count,wait,The count threshold was not reached.,Continue independent work.,,
+E4,Engineering design,1,fail,sequence,wait,Allow independent work while evidence is limited.,Continue independent work.,,
+E4,Engineering design,2,fail → revise,fixed_question,probe,Offer a question at every decision point.,Which objects and orientations should your fit check cover?,,
+E4,Engineering design,2,fail → revise,latest_event,retest,The latest revision needs a fresh check.,Rerun the relevant checkpoint on the revised version.,,
+E4,Engineering design,2,fail → revise,failure_count,wait,The count threshold was not reached.,Continue independent work.,,
+E4,Engineering design,2,fail → revise,sequence,retest,The latest revision needs a fresh check.,Rerun the relevant checkpoint on the revised version.,,
+E4,Engineering design,3,fail → revise → plan,fixed_question,probe,Offer a question at every decision point.,Which objects and orientations should your fit check cover?,wait|retest,0
+E4,Engineering design,3,fail → revise → plan,latest_event,wait,This event alone does not trigger support.,Continue independent work.,wait|retest,1
+E4,Engineering design,3,fail → revise → plan,failure_count,wait,The count threshold was not reached.,Continue independent work.,wait|retest,1
+E4,Engineering design,3,fail → revise → plan,sequence,wait,Allow independent work while evidence is limited.,Continue independent work.,wait|retest,1
