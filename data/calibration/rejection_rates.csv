@@ -1,0 +1,4 @@
+scenario,quantity,replicates,rejections,rejection_rate,ci_95_lower,ci_95_upper
+iid,false_positive_rate,200,5,0.025,0.008166166190842514,0.05737435112684586
+heterogeneous_iid,false_positive_rate,200,11,0.055,0.02777225455200654,0.09627764443391285
+markov,power,200,200,1.0,0.9817246596448638,1.0

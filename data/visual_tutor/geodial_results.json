@@ -1,0 +1,89 @@
+{
+  "dataset": "SankalanPC/Geo2Dial",
+  "source": "https://huggingface.co/datasets/SankalanPC/Geo2Dial",
+  "dataset_commit": "ba900ab",
+  "target": "draw_on_image on the current teacher turn after any prior learner text",
+  "feature_scope": "One versus up to three prior student messages. No teacher text, answers, images, or current annotations.",
+  "sha256": {
+    "train": "d1075eb6b7ff0f7e57fb52058d65bc46e5d454d60786ae8623c45f1a576587b4",
+    "validation": "becb0e40ae18e3ae6378fc76e2c2ac360aa70e929b8441df7a0d913b48d1f545",
+    "test": "0cd757076105861374c23bb169a728cb4d59adc6a58f50435d51a057e24de069"
+  },
+  "split_overlap": {
+    "qid": 0,
+    "group_id": 0
+  },
+  "counts": {
+    "train": {
+      "dialogues": 800,
+      "problem_groups": 566,
+      "decision_points": 6231,
+      "recorded_highlights": 3013,
+      "cold_start_excluded": 800,
+      "all_teacher_turns": 7031
+    },
+    "validation": {
+      "dialogues": 141,
+      "problem_groups": 99,
+      "decision_points": 1113,
+      "recorded_highlights": 530,
+      "cold_start_excluded": 141,
+      "all_teacher_turns": 1254
+    },
+    "test": {
+      "dialogues": 400,
+      "problem_groups": 299,
+      "decision_points": 2935,
+      "recorded_highlights": 1416,
+      "cold_start_excluded": 400,
+      "all_teacher_turns": 3335
+    }
+  },
+  "validation": {
+    "prevalence": {
+      "auroc": 0.5,
+      "average_precision": 0.47619047619047616,
+      "brier": 0.24948726904855525
+    },
+    "latest": {
+      "auroc": 0.6600618142981973,
+      "average_precision": 0.6080775664249058,
+      "brier": 0.23038138624370155
+    },
+    "prefix3": {
+      "auroc": 0.6823537978575359,
+      "average_precision": 0.6277432974086374,
+      "brier": 0.22641470940071584
+    }
+  },
+  "test": {
+    "prevalence": {
+      "auroc": 0.5,
+      "average_precision": 0.48245315161839863,
+      "brier": 0.2496933111706422
+    },
+    "latest": {
+      "auroc": 0.6273478500202705,
+      "average_precision": 0.5921641181345082,
+      "brier": 0.23892419642470822
+    },
+    "prefix3": {
+      "auroc": 0.6477834436125463,
+      "average_precision": 0.6229925596850647,
+      "brier": 0.233389073027713
+    }
+  },
+  "test_brier_delta_prefix_minus_latest": {
+    "estimate": -0.005535123396995215,
+    "interval_95": [
+      -0.010099702839981054,
+      -0.0005167295268866514
+    ],
+    "resamples": 2000,
+    "resampling_unit": "test problem group (group_id)"
+  },
+  "versions": {
+    "numpy": "2.3.5",
+    "scikit_learn": "1.8.0"
+  }
+}

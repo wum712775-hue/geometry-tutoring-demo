@@ -1,0 +1,6 @@
+from_behavior,Gaze_A,Gaze_B,Error_Op,Look_Back,Correct_Op
+Gaze_A,63,66,41,61,85
+Gaze_B,73,70,31,59,80
+Error_Op,30,34,13,38,52
+Look_Back,64,52,33,47,84
+Correct_Op,80,94,46,78,76
