@@ -1,6 +1,0 @@
-from_behavior,true_maximum_set,estimated_maximum_set,informative_row,estimated_maxima_all_in_true_set,interpretation
-Gaze_A,Gaze_A | Gaze_B | Error_Op | Look_Back | Correct_Op,Error_Op,False,,uniform truth: top-1 is uninformative
-Gaze_B,Gaze_A | Gaze_B | Error_Op | Look_Back | Correct_Op,Error_Op,False,,uniform truth: top-1 is uninformative
-Error_Op,Look_Back,Look_Back,True,True,tie-aware descriptive check
-Look_Back,Correct_Op,Correct_Op,True,True,tie-aware descriptive check
-Correct_Op,Gaze_A | Gaze_B,Gaze_B,True,True,tie-aware descriptive check

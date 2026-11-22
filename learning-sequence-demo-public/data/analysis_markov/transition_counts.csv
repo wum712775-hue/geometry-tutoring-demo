@@ -1,6 +1,0 @@
-from_behavior,Gaze_A,Gaze_B,Error_Op,Look_Back,Correct_Op
-Gaze_A,54,63,78,58,59
-Gaze_B,65,49,66,60,59
-Error_Op,27,25,31,104,44
-Look_Back,25,22,31,26,157
-Correct_Op,136,144,23,13,31
